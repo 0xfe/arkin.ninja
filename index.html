@@ -1,0 +1,136 @@
+<html>
+  <head>
+    <title>
+      Arkin the Ninja
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <script>
+      // Dirty hack to redirect to HTTPS.
+      if (
+        window.location.protocol == 'http:' &&
+        window.location.hostname != 'localhost'
+      ) {
+        console.log('hiiiiyaaaaaaa...');
+        window.location.protocol = 'https:';
+      }
+
+      // Use a test API key on localhost, and prod keys otherwise.
+      let QUID_API_KEY = 'kt-A4JT16C4CA9V69Z5AWELNB24G33F77VK'; // localhost:8080, localhost: 8600
+      if (window.location.hostname != 'localhost') {
+        QUID_API_KEY = 'kp-FSHPWD3YJ8T59F2LGIWUC1IZDSBKXRW6';
+      }
+    </script>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Akronim|Architects+Daughter"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://js.quid.works/v1/assets/quid.css" />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="container flexcolumn">
+      <div class="header">
+        <h1>Arkin the Ninja</h1>
+      </div>
+      <div class="hello">
+        <div>
+          Hi! My name is Arkin, and I'm not a ninja (yet!)
+        </div>
+        <div>
+          But I did write a book!
+        </div>
+      </div>
+      <div class="book">
+        <h3>Arkin and Cuckoo: Part 1</h3>
+        <h4>Voyage to the Volcano</h4>
+
+        <div id="chapters" class="chapters flexcolumn">
+          <img src="pages/page-1.small.jpg" width="500" />
+
+          <div class="chapter">
+            <h3>Chapter 1</h3>
+            <img src="pages/page-2.small.jpg" width="500" />
+          </div>
+        </div>
+        <div>
+          <h3>To be continued...</h3>
+          <img src="pages/page-8.small.jpg" width="500" />
+        </div>
+      </div>
+
+      <div class="footer">
+        If you liked this, you can e-mail me at
+        <a href="mailto:katana@arkin.ninja">katana@arkin.ninja</a>, or you can
+        tweet my dad at <a href="https://twitter.com/11111110b">@11111110b</a>.
+      </div>
+    </div>
+    <script src="https://js.quid.works/v1/client.js"></script>
+    <script>
+      // This function generates the body for each chapter. It includes
+      // the title, the image, and the pay button.
+      function addChapter(number) {
+        let chapter = document.createElement('div');
+        chapter.classList.add('chapter');
+
+        let heading = document.createElement('h3');
+        heading.innerText = 'Chapter ' + number;
+
+        let image = document.createElement('img');
+        image.id = 'arkin.ninja.volcano.ch' + number;
+        image.src = 'pages/page-' + number + '.small.jpg';
+        image.width = '500';
+        image.classList.add('blur');
+
+        let button = document.createElement('div');
+        button.id = 'arkin.ninja.volcano.ch' + number + '-button';
+        button.classList.add('quid-button');
+        button.classList.add('overlay');
+        button.setAttribute('quid-amount', '0.01');
+        button.setAttribute('quid-currency', 'CAD');
+        button.setAttribute('quid-size', 'large');
+        button.setAttribute(
+          'quid-product-id',
+          'arkin.ninja.volcano.ch' + number
+        );
+        button.setAttribute(
+          'quid-product-url',
+          'arkin.ninja/volcano/ch' + number
+        );
+        button.setAttribute(
+          'quid-product-name',
+          'Voyage to the Volcano: Chapter ' + number
+        );
+        button.setAttribute(
+          'quid-product-description',
+          'Chapter ' + number + ' of Arkin and Cuckoo (Part 1)'
+        );
+        button.setAttribute('quid-text', 'Read for a penny');
+
+        chapter.appendChild(heading);
+        chapter.appendChild(image);
+        chapter.appendChild(button);
+
+        document.getElementById('chapters').appendChild(chapter);
+      }
+
+      addChapter(2);
+      addChapter(3);
+      addChapter(4);
+      addChapter(5);
+      addChapter(6);
+      addChapter(7);
+
+      quid.autoInit({
+        apiKey: QUID_API_KEY,
+        onPaymentSuccess: function(receipt) {
+          // Get the div ID from the product ID, then remove the image blur and pay button.
+          document.getElementById(receipt.productID).classList.remove('blur');
+          document.getElementById(receipt.productID + '-button').style.display =
+            'none';
+        }
+      });
+    </script>
+  </body>
+</html>
