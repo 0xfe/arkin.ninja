@@ -78,6 +78,7 @@
       // This function generates the body for each chapter. It includes
       // the title, the image, and the pay button.
       function addChapter(number) {
+        let page = number + 1;
         let chapter = document.createElement('div');
         chapter.classList.add('chapter');
 
@@ -85,33 +86,30 @@
         heading.innerText = 'Chapter ' + number;
 
         let image = document.createElement('img');
-        image.id = 'arkin.ninja.volcano.ch' + number;
-        image.src = 'pages/page-' + number + '.small.jpg';
+        image.id = 'arkin.ninja.volcano.ch' + page;
+        image.src = 'pages/page-' + page + '.small.jpg';
         image.width = '500';
         image.classList.add('blur');
 
         let button = document.createElement('div');
-        button.id = 'arkin.ninja.volcano.ch' + number + '-button';
+        button.id = 'arkin.ninja.volcano.ch' + page + '-button';
         button.classList.add('quid-button');
         button.classList.add('overlay');
         button.setAttribute('quid-amount', '0.01');
         button.setAttribute('quid-currency', 'CAD');
         button.setAttribute('quid-size', 'large');
-        button.setAttribute(
-          'quid-product-id',
-          'arkin.ninja.volcano.ch' + number
-        );
+        button.setAttribute('quid-product-id', 'arkin.ninja.volcano.ch' + page);
         button.setAttribute(
           'quid-product-url',
-          'arkin.ninja/volcano/ch' + number
+          'arkin.ninja/volcano/ch' + page
         );
         button.setAttribute(
           'quid-product-name',
-          'Voyage to the Volcano: Chapter ' + number
+          'Voyage to the Volcano: Chapter ' + page
         );
         button.setAttribute(
           'quid-product-description',
-          'Chapter ' + number + ' of Arkin and Cuckoo (Part 1)'
+          'Chapter ' + page + ' of Arkin and Cuckoo (Part 1)'
         );
         button.setAttribute('quid-text', 'Read for a penny');
 
@@ -127,7 +125,6 @@
       addChapter(4);
       addChapter(5);
       addChapter(6);
-      addChapter(7);
 
       quid.autoInit({
         apiKey: QUID_API_KEY,
